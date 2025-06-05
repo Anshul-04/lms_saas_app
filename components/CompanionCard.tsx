@@ -2,8 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+
+/**
+ * Represents the properties for the CompanionCard component.
+ */
 interface CompanionCardProps {
-  id: string;
+  id: string; // Unique identifier for the companion
   name: string;
   topic: string;
   subject: string;
@@ -18,7 +22,7 @@ interface CompanionCardProps {
 }
 
 
-export const CompanionCard = ({ id,name, topic, subject, duration, color,}) => {
+export const CompanionCard = ({ id,name, topic, subject, duration, color} : CompanionCardProps) => {
   return (
     <article className="companion-card" style={{ backgroundColor: color }}>
 

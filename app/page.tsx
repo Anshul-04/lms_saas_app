@@ -1,6 +1,7 @@
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
+import { recentSessions } from "@/constants";
 
 // This is the Home page of the application, where we display popular companions and a list of all companions.
 const Page = () => {
@@ -42,7 +43,11 @@ const Page = () => {
        
       {/** This section displays a list of all companions and a call to action (CTA) button. */}
       <section className="home-section">
-        <CompanionsList />
+        <CompanionsList 
+          title="Recently Completed Sessions"
+          companions = {recentSessions} // This should be an array of companion objects
+          className = "w-2/3 mx-lg:w-full"
+        />
         <CTA />
       </section>
 
