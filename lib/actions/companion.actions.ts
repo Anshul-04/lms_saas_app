@@ -49,3 +49,16 @@ export const getAllCompanion = async ({ limit = 10, page = 1 ,subject,topic }: G
   return companions; // Return the fetched companions
 
 }
+// This function retrieves a specific companion by its ID from the database.
+export const getCompanion = async (id : string) => {
+  const supabase = createSupabaseClient(); // Create a Supabase client instance
+
+  const {data, error} = await supabase
+    .from('companions')
+    .select()
+    .eq('id', id) // Select the companion with the specified ID
+
+    if(error) return console.log(error)
+
+      return data[0]; // Return the companion data or undefined if not found
+}
