@@ -25,7 +25,7 @@ export default function RootLayout({
         {/* ClerkProvider wraps the application to provide authentication context */}
         <ClerkProvider appearance={{variables: { colorPrimary: "#fe5933" }}}>           
           <Navbar />
-          {children}
+          {children} 
         </ClerkProvider>
       </body>
     </html>

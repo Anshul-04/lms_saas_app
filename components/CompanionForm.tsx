@@ -11,6 +11,9 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import { subjects } from "@/constants"
 import { Textarea } from "./ui/textarea"
+import { createCompanion } from "@/lib/actions/companion.actions"
+import { redirect } from 'next/navigation';
+
 
 // Define the schema for the form using Zod
 const formSchema = z.object({
@@ -41,9 +44,17 @@ const CompanionForm = () => {
   })
  
   {/** This function handles form submission.*/}
-  const onSubmit = (values: z.infer<typeof formSchema>) =>{
-    // Do something with the form values.This will be type-safe and validated.
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof formSchema>) =>{
+    
+    const companion = await createCompanion(values); // Create a new companion using the form data
+
+    if(companion){
+      redirect(`/companions/${companion.id}`); // Redirect to the newly created companion's page
+    }
+    else{
+      console.log("Failed to create a companion. Please try again later.");
+      redirect('/'); // Redirect to the home page if creation fails
+    }
   }
 
   return (   
