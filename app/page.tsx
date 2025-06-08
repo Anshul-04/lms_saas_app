@@ -41,7 +41,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
-function getAllCompanion(arg0: { limit: number }) {
-  throw new Error("Function not implemented.");
-}
+export default Page
