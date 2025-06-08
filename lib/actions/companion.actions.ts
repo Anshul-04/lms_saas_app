@@ -31,6 +31,8 @@ export const getAllCompanions = async ({
     topic,
   }: GetAllCompanions) => {
   const supabase = createSupabaseClient();
+  
+  const { userId } = await auth();
 
   let query = supabase.from("companions").select(); // Select all columns from the "companions" table
 
@@ -50,7 +52,25 @@ export const getAllCompanions = async ({
   const { data: companions, error } = await query; // Execute the query and get the data or error
   if (error) throw new Error(error.message || "Failed to fetch companions"); // Handle errors
 
-  return companions; // Return the fetched companions
+  // Get an array of companion IDs
+  const companionIds = companions.map(({ id }) => id);
+
+  // Get the bookmarks where user_id is the current user and companion_id is in the array of companion IDs
+  const { data: bookmarks } = await supabase
+    .from("bookmarks")
+    .select()
+    .eq("user_id", userId)
+    .in("companion_id", companionIds); // Notice the in() function used to filter the bookmarks by array
+
+  const marks = new Set(bookmarks?.map(({ companion_id }) => companion_id));
+
+  // Add a bookmarked property to each companion
+  companions.forEach((companion) => {
+    companion.bookmarked = marks.has(companion.id);
+  });
+
+  // Return the companions as before, but with the bookmarked property added
+  return companions;
 };
 
 // This function retrieves a specific companion by its ID from the database.

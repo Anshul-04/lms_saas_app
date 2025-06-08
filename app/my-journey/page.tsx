@@ -75,7 +75,8 @@ const Profile = async () => {
             Bookmarked Companions {`(${bookmarkedCompanions.length})`}
           </AccordionTrigger>
           <AccordionContent>
-            <CompanionsList
+            <CompanionsList 
+              key={user.id}
               companions={bookmarkedCompanions}
               title="Bookmarked Companions"
             />
@@ -85,7 +86,7 @@ const Profile = async () => {
         {/** Accordion for Recent Sessions  */} 
         <AccordionItem value="recent">
           <AccordionTrigger className="text-2xl font-bold">
-            Recent Sessions
+            Recent Sessions {`(${sessionHistory.length})`}
           </AccordionTrigger>
           <AccordionContent>
             <CompanionsList
